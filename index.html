@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Question...</title>
+    <title>Urgent: Legal Notice inside</title>
     <style>
         body {
-            background: linear-gradient(135deg, #fff5f8 0%, #ffe3ec 100%);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #fff5f8;
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* Adding to the "fun" vibe */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -18,96 +18,78 @@
 
         .card {
             background: white;
-            padding: 40px;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(216, 27, 96, 0.15);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
             text-align: center;
-            max-width: 420px;
-            width: 90%;
-            border: 1px solid #ffdae9;
-            transition: all 0.5s ease;
+            width: 350px;
+            border: 4px dashed #ff4d6d;
+            position: relative;
         }
 
-        .icon {
-            font-size: 60px;
-            margin-bottom: 10px;
-        }
-
-        h1 {
-            color: #d81b60;
-            font-size: 28px;
-            margin-bottom: 15px;
-        }
-
-        p.pitch {
-            color: #666;
-            font-size: 18px;
-            line-height: 1.5;
-            margin-bottom: 30px;
-        }
-
-        .details-box {
-            display: none; /* Hidden until Yes is clicked */
-            margin-top: 20px;
-            padding: 20px;
-            background: #fff0f3;
-            border-radius: 15px;
-            text-align: left;
-            border-left: 5px solid #ff4d6d;
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .details-box div {
-            margin-bottom: 10px;
-            color: #444;
-        }
-
-        .details-box strong {
-            color: #d81b60;
-            display: inline-block;
-            width: 100px;
-        }
+        h1 { color: #d81b60; font-size: 24px; }
+        p { color: #444; font-size: 16px; }
 
         .btn-container {
+            margin-top: 20px;
             display: flex;
-            justify-content: center;
-            gap: 15px;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
         }
 
-        .btn {
-            background-color: #ff4d6d;
+        .btn-yes {
+            background: #ff4d6d;
             color: white;
             border: none;
-            padding: 15px 35px;
-            border-radius: 30px;
-            font-size: 18px;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 20px;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
-            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            width: 80%;
+            transition: transform 0.2s;
         }
 
-        .btn:hover {
-            background-color: #c9184a;
-            transform: translateY(-3px);
-        }
+        .btn-yes:hover { transform: scale(1.2); background: #38b000; }
 
-        #no-btn {
-            background-color: #f8f9fa;
+        .btn-no {
+            background: #eee;
             color: #888;
-            box-shadow: none;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .success-msg {
+        /* The Reveal Section */
+        #details {
             display: none;
-            color: #38b000;
-            font-size: 22px;
+            animation: bounceIn 0.8s;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .receipt {
+            background: #fff9c4;
+            padding: 15px;
+            border: 1px solid #fbc02d;
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+
+        .warning {
+            color: red;
             font-weight: bold;
+            font-size: 11px;
+            text-transform: uppercase;
             margin-top: 10px;
         }
     </style>
@@ -115,46 +97,71 @@
 <body>
 
     <div class="card" id="main-card">
-        <div class="icon">✨</div>
-        <h1 id="title">I have a question...</h1>
-        <p class="pitch" id="pitch-text">
-            Life is better when there's a sunset, a cold drink, and someone amazing to share it with. Will you be my date?
-        </p>
-        
-        <div class="btn-container" id="controls">
-            <button class="btn" onclick="acceptInvitation()">Yes!</button>
-            <button class="btn" id="no-btn" onmouseover="moveNo()">No</button>
+        <div id="question-side">
+            <div style="font-size: 50px;">🤨</div>
+            <h1>Official Inquiry</h1>
+            <p id="main-text">The Sky Deck is booked. The vibe is set. My outfit is (mostly) decided. <br><br><strong>Will you be my date?</strong></p>
+            
+            <div class="btn-container">
+                <button class="btn-yes" onclick="showSuccess()">YES! 😍</button>
+                <button class="btn-no" id="no-btn" onclick="shrinkNo()">No</button>
+            </div>
+            <p id="guilt-trip" style="font-size: 12px; color: #999; margin-top: 10px;"></p>
         </div>
 
-        <div id="details" class="details-box">
-            <div class="success-msg" id="msg">It's a date! See you there. 🥂</div>
-            <hr style="border: 0; border-top: 1px solid #ffdae9; margin: 15px 0;">
-            <div><strong>When:</strong> Feb 17, 4:00 PM</div>
-            <div><strong>Where:</strong> Bayleaf Intramuros, Sky Deck</div>
-            <div><strong>Dress Code:</strong> Smart Casual Attire</div>
+        <div id="details">
+            <div style="font-size: 50px;">🥳</div>
+            <h1>EXCELLENT CHOICE!</h1>
+            <p>Your reservation is confirmed. Please print this for your records:</p>
+            
+            <div class="receipt">
+                <strong>DATE TICKET #001</strong><br>
+                -----------------------<br>
+                <strong>CLIENT:</strong> The Prettiest Girl<br>
+                <strong>WHEN:</strong> Feb 17, 4:00 PM<br>
+                <strong>WHERE:</strong> Bayleaf Intramuros (Sky Deck)<br>
+                <strong>DRESS CODE:</strong> Smart Casual Attire<br>
+                <br>
+                -----------------------<br>
+                <strong>PRICE:</strong> One (1) smile.
+            </div>
+            <p class="warning">Warning: Clicking 'Yes' has entered you into a legally binding contract for appetizers and sunsets.</p>
         </div>
     </div>
 
     <script>
-        function acceptInvitation() {
-            // Hide the question and buttons
-            document.getElementById('pitch-text').style.display = 'none';
-            document.getElementById('controls').style.display = 'none';
-            document.getElementById('title').innerText = "Perfect. ❤️";
+        let noClicks = 0;
+        const guiltMessages = [
+            "Are you sure? I already washed my face.",
+            "But the sunset will be lonely...",
+            "Think of the appetizers! They have feelings too.",
+            "I'll tell my mom you said no.",
+            "Okay, now you're just being mean.",
+            "Error 404: 'No' option not found."
+        ];
+
+        function shrinkNo() {
+            noClicks++;
+            const noBtn = document.getElementById('no-btn');
+            const guilt = document.getElementById('guilt-trip');
             
-            // Show the details
-            document.getElementById('details').style.display = 'block';
-            document.getElementById('msg').style.display = 'block';
+            // Make "No" smaller and "Yes" bigger
+            let size = 1 - (noClicks * 0.2);
+            if (size < 0.1) {
+                noBtn.style.display = 'none';
+            } else {
+                noBtn.style.transform = `scale(${size})`;
+            }
+
+            // Change the guilt trip text
+            guilt.innerText = guiltMessages[Math.min(noClicks - 1, guiltMessages.length - 1)];
         }
 
-        // Fun feature: The "No" button moves when hovered
-        function moveNo() {
-            const btn = document.getElementById('no-btn');
-            const x = Math.random() * (window.innerWidth - btn.offsetWidth) - (window.innerWidth/2);
-            const y = Math.random() * (window.innerHeight - btn.offsetHeight) - (window.innerHeight/2);
-            btn.style.transform = `translate(${x/2}px, ${y/2}px)`;
+        function showSuccess() {
+            document.getElementById('question-side').style.display = 'none';
+            document.getElementById('details').style.display = 'block';
+            document.getElementById('main-card').style.borderColor = '#38b000';
         }
     </script>
-
 </body>
 </html>
